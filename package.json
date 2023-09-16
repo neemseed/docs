@@ -1,0 +1,24 @@
+{
+  "name": "frontend",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/markdoc": "^0.5.0",
+    "@astrojs/starlight": "^0.9.1",
+    "@astrojs/starlight-tailwind": "^2.0.0",
+    "@astrojs/tailwind": "^5.0.0",
+    "astro": "^3.0.6",
+    "astro-expressive-code": "^0.22.2",
+    "remark-expressive-code": "^0.22.2",
+    "sharp": "^0.32.5",
+    "starlight-package-managers": "^0.1.0",
+    "tailwindcss": "^3.3.3"
+  }
+}
