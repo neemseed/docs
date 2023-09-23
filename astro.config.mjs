@@ -1,7 +1,12 @@
 import { defineConfig } from "astro/config";
 import starlight from "@astrojs/starlight";
-import expressiveCode from "astro-expressive-code";
+import astroExpressiveCode from "astro-expressive-code";
 import overrideIntegration from './src/overrideIntegration.mjs'
+
+const astroExpressiveCodeOptions = {
+  theme: 'one-dark-pro', // Change the theme to "one-dark"
+};
+
 export const locales = {
   root: {
     label: "English",
@@ -22,7 +27,7 @@ const site = "http://localhost:4321/";
 export default defineConfig({
   site,
   integrations: [
-    expressiveCode(),
+    astroExpressiveCode(astroExpressiveCodeOptions),
     overrideIntegration(),
     starlight({
       title: "NEEMSEED",
