@@ -1,0 +1,147 @@
+---
+import Search from "@astrojs/starlight/components/Search.astro";
+import ThemeSelect from "@astrojs/starlight/components/ThemeSelect.astro";
+import SocialIcons from "@astrojs/starlight/components/SocialIcons.astro";
+import LanguageSelect from "@astrojs/starlight/components/LanguageSelect.astro";
+
+const { locale } = Astro.props;
+---
+
+<!-- <link rel="preconnect" href="https://fonts.gstatic.com" /> --><!-- <link
+  href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400&family=Roboto:wght@200;300;400;500;600;800&display=swap"
+  rel="stylesheet"
+/> -->
+<link
+  rel="stylesheet"
+  href="https://unpkg.com/@astrouxds/astro-web-components@6.12.1/dist/astro-web-components/astro-web-components.css"
+/>
+<script
+  type="module"
+  defer
+  src="https://unpkg.com/@astrouxds/astro-web-components@6.12.1/dist/astro-web-components/astro-web-components.esm.js"
+></script>
+<div class="header sl-flex">
+  <a href="/" class="site-title">
+    <!-- <img src="/img/wm-logo.svg" alt="Web Monetization logo">for logo -->
+    <span><h2>neemseed</h2></span>
+  </a>
+  <div class="secondary-wrap">
+    <Search {locale} />
+    <SocialIcons />
+    <div class="sl-hidden selects md:sl-flex">
+      <!-- <ThemeSelect {locale} /> -->
+      <rux-switch slot="right-side" id="theme-switch" data-state="false">
+        <rux-icon id="theme-icon" slot="label" icon="brightness-3" size="small"
+        ></rux-icon>
+      </rux-switch>
+      <LanguageSelect {locale} />
+    </div>
+  </div>
+</div>
+
+<style>
+  .header {
+    gap: var(--sl-nav-gap);
+    align-items: center;
+    height: 100%;
+  }
+
+  a {
+    text-decoration: none;
+    color: var(--sl-color-text);
+  }
+
+  .secondary-wrap {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    gap: var(--sl-nav-gap);
+  }
+
+  .selects {
+    gap: var(--sl-nav-gap);
+  }
+
+  .site-title {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+  }
+
+  .site-title img {
+    width: 2.5em;
+    flex: none;
+  }
+
+  .site-title span {
+    font-size: larger;
+    white-space: nowrap;
+  }
+  rux-switch {
+    margin-top: 1rem;
+  }
+</style>
+<script>
+  const body = document.querySelector("body");
+  const themeSwitch = document.getElementById("theme-switch");
+  const themeIcon = document.getElementById("theme-icon");
+  const darkIcon = "brightness-3";
+  const darkTheme = "dark-theme1";
+  const lightIcon = "wb-sunny";
+  const lightTheme = "light-theme1";
+  const themeName = "astro-theme";
+  const themePreference = window.localStorage.getItem(themeName);
+
+  if (themePreference) {
+    const preference = JSON.parse(themePreference);
+    body.className = preference.class;
+    themeIcon.icon = preference.icon;
+    themeSwitch.checked = preference.icon === lightIcon;
+  }
+  const sidebarPane = document.querySelector(".sidebar-pane.astro-2gh5jeoh");
+  if (sidebarPane) {
+    sidebarPane.classList.add("dark-sidebar");
+
+  }
+  const header = document.querySelector(".header.astro-2gh5jeoh");
+  if (header) {
+    header.classList.add("dark-sidebar");
+  }
+
+
+
+  themeSwitch.addEventListener("click", (e) => {
+    if (!e.target.checked) {
+      const preference = { class: lightTheme, icon: lightIcon };
+      window.localStorage.setItem(themeName, JSON.stringify(preference));
+      body.className = lightTheme;
+      const sidebarPane = document.querySelector(
+        ".sidebar-pane.astro-2gh5jeoh"
+      );
+      if (sidebarPane) {
+        sidebarPane.classList.add("light-sidebar");
+      }
+
+      const header = document.querySelector(".header.astro-2gh5jeoh");
+      if (header) {
+        header.classList.add("light-sidebar");
+      }
+
+      themeIcon.icon = lightIcon;
+      return;
+    }
+    const preference = { class: darkTheme, icon: darkIcon };
+    window.localStorage.setItem(themeName, JSON.stringify(preference));
+    body.className = darkTheme;
+    const sidebarPane = document.querySelector(".sidebar-pane.astro-2gh5jeoh");
+    if (sidebarPane) {
+      sidebarPane.classList.add("dark-sidebar");
+      sidebarPane.classList.remove("light-sidebar");
+    }
+    const header = document.querySelector(".header.astro-2gh5jeoh");
+    if (header) {
+      header.classList.remove("light-sidebar");
+    }
+    themeIcon.icon = darkIcon;
+  });
+</script>
